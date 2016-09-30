@@ -25,5 +25,18 @@ public class Solution {
         }
         
         return new int[]{-1, -1};
+    } 
+    // single pass solution
+    public int[] twoSumSinglePass(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i =0;i<nums.length;i++){
+            int toLook = target-nums[i];
+            if(map.containsKey(toLook) && map.get(toLook) != i){
+                return new int[] {i, map.get(toLook)};
+            } else{
+                map.put(nums[i], i);
+            }
+        }
+        return new int[]{-1,-1};
     }
 }
