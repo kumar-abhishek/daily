@@ -20,4 +20,18 @@ public class Solution {
         head.next = null;
         return newHead;
     }
+
+    //accepted
+    public ListNode reverseListIterative(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode prev = null, next = head.next;
+        ListNode temp = head;
+        while(temp != null){
+            temp.next = prev;
+            prev = temp;
+            temp = next;
+            if(next != null) next = next.next;
+        }
+        return prev;
+    }
 }
