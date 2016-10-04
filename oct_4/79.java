@@ -16,6 +16,8 @@ word = "ABCCED", -> returns true,
 word = "SEE", -> returns true,
 word = "ABCB", -> returns false.
 */
+
+//accepted
 public class Solution {
     public boolean dfs(char[][] board, int m, int n, int i, int j, int k, String word){
         if(k == word.length()) return true;
