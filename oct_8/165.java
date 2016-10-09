@@ -13,6 +13,9 @@ Here is an example of version numbers ordering:
 Credits:
 Special thanks to @ts for adding this problem and creating all test cases.
 */
+
+//NOT accepted
+
 public class Solution {
     public int compareVersion(String version1, String version2) {
         int i=0, j =0;
