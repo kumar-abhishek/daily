@@ -17,6 +17,7 @@ Note:
 You may assume both s and t have the same length.
 */
 
+//accepted
 public class Solution {
     public boolean isIsomorphic(String s, String t) {
         if(s.length() != t.length()) return false;
