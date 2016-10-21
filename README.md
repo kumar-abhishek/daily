@@ -1,1 +1,1 @@
-My daily commitment to leetcode problem solving.
+My daily commitment to problem solving.
