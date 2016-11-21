@@ -52,7 +52,7 @@ void insertionSort(int[] ar)
 } }
 
 
-Merge sort
+// Merge sort
 public class MergeSort {
     public static void main(String[] args) {
         int unsortedArray[] = new int[]{6, 5, 3, 1, 8, 7, 2, 4};
@@ -110,7 +110,7 @@ public class MergeSort {
     }
 }
 
-Quick sort
+// Quick sort
 
 public class Sort {
     public static void main(String[] args) {
@@ -159,7 +159,7 @@ public class Sort {
     }
 }
 
-Heap sort
+// Heap sort
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -221,39 +221,8 @@ class HeapSort {
         }
 }
 
-Heap Sort:
 
-def Parent(i): return i/2
-def Left(i): return 2*i
-def Right(i): return 2*i+1
-
-def Heapify(A, i, n): # A is "almost a heap" (except root); fix it so all of A is a heap
-    l = Left(i)
-    r = Right(i)
-    if l <= n and A[l] > A[i]: largest = l
-    else: largest = i
-    if r <= n and A[r] > A[largest]:
-        largest = r
-    if largest != i:
-        A[i], A[largest] = A[largest], A[i]
-        Heapify(A, largest, n)
-
-def HeapLength(A): return len(A)-1
-
-def BuildHeap(A): # build a heap A from an unsorted array
-    n = HeapLength(A)
-    for i in range(n/2,-1,-1):
-        Heapify(A,i,n)
-
-def HeapSort(A): # use a heap to build sorted array from the end
-    BuildHeap(A)
-    HeapSize=HeapLength(A)
-    for i in range(HeapSize,-1,-1):
-        A[0],A[i]=A[i],A[0] # largest element is a root of heap, put it at the end of array
-        HeapSize=HeapSize-1 # shrink heap size by 1 to get next largest element
-        Heapify(A,0,HeapSize)
-
-counting and radix sort
+// counting and radix sort
 #!/usr/bin/env python
 
 def counting_sort(array, maxval):
@@ -291,7 +260,7 @@ array=radix_sort(array,4)
 print(array)
 #############################################
 
-35. BST to sorted DLL
+// 35. BST to sorted DLL
 
  
 public class QuestionC {
@@ -435,7 +404,7 @@ def concat(x, y):
         x.right = y
         y.left = x
 
-44. 3 Sum [The solution set must not contain duplicate triplets.]
+// 3 Sum [The solution set must not contain duplicate triplets.]
 
 class Solution:
     # @param {integer[]} nums
@@ -456,7 +425,7 @@ class Solution:
                     j += 1
         return ans
 
-3 Sum Closest variant:
+// 3 Sum Closest variant:
 
 class Solution:
     # @param {integer[]} nums
@@ -479,7 +448,7 @@ class Solution:
                     j += 1
         return ans
 
-4 Sum: variant
+// 4 Sum: variant
 
 class Solution:
     # @param {integer[]} nums
@@ -1118,10 +1087,10 @@ class Solution(object):
 
 
 
-Subsets of a list [power set]/permutation
+// Subsets of a list [power set]/permutation
 
 
-Permutations : https://leetcode.com/problems/permutations/
+// Permutations : https://leetcode.com/problems/permutations/
 public List<List<Integer>> permute(int[] nums) {
   List<List<Integer>> list = new ArrayList<>();
   // Arrays.sort(nums); // not necessary
@@ -1143,7 +1112,7 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 }
 
 
-Permutations II (contains duplicates) : https://leetcode.com/problems/permutations-ii/
+// Permutations II (contains duplicates) : https://leetcode.com/problems/permutations-ii/
 public List<List<Integer>> permuteUnique(int[] nums) {
     List<List<Integer>> list = new ArrayList<>();
     Arrays.sort(nums);
@@ -1197,7 +1166,7 @@ public boolean isPalindrome(String s, int low, int high){
 
 
 	
-30. Combination: Picking 'k' items from a list of 'n' - Recursion 
+// 30. Combination: Picking 'k' items from a list of 'n' - Recursion 
 
 public class Solution { 
     public List<List<Integer>> combine(int n, int k) { 
@@ -1216,9 +1185,9 @@ public class Solution {
     } 
 } 
 
-Power set 
--=== 
-Subsets : https://leetcode.com/problems/subsets/
+//Power set 
+//-=== 
+//Subsets : https://leetcode.com/problems/subsets/
 
 public List<List<Integer>> subsets(int[] nums) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1237,7 +1206,7 @@ private void backtrack(List<List<Integer>> list , List<Integer> tempList, int []
 }
 
 
-Subsets II (contains duplicates) : https://leetcode.com/problems/subsets-ii/
+// Subsets II (contains duplicates) : https://leetcode.com/problems/subsets-ii/
 
 public List<List<Integer>> subsetsWithDup(int[] nums) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1256,9 +1225,9 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
     }
 } 
 
-Combination Sum: Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T. The same repeated number may be chosen from C unlimited number of times.
+//Combination Sum: Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T. The same repeated number may be chosen from C unlimited number of times.
 
-Combination Sum : https://leetcode.com/problems/combination-sum/
+// Combination Sum : https://leetcode.com/problems/combination-sum/
 
 public List<List<Integer>> combinationSum(int[] nums, int target) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1280,7 +1249,7 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 }
 
 
-Combination Sum II (can't reuse same element) : https://leetcode.com/problems/combination-sum-ii/
+// Combination Sum II (can't reuse same element) : https://leetcode.com/problems/combination-sum-ii/
 
 public List<List<Integer>> combinationSum2(int[] nums, int target) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1306,7 +1275,7 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 
 
 
-Inorder successor in a BST:
+// Inorder successor in a BST:
 class Solution(object):
     def inorderSuccessor(self, root, p):
         """
@@ -1333,7 +1302,7 @@ class Solution(object):
         return successor
 
 
-LRU Cache
+// LRU Cache
 
 class LRUCache:
      def __init(self, capacity):
@@ -1367,7 +1336,7 @@ class LRUCache:
             node = self.cache_vals.remove_head()
             del self.cache[node.key]
            
-Hash table implementation 
+// Hash table implementation 
 
 import java.util.ArrayList;
 
