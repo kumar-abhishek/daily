@@ -262,147 +262,67 @@ print(array)
 
 // 35. BST to sorted DLL
 
- 
-public class QuestionC {
+class TreeList {
+    /*
+     helper function -- given two list nodes, join them
+     together so the second immediately follow the first.
+     Sets the .next of the first and the .previous of the second.
+    */
+    public static void join(Node a, Node b) {
+        a.right = b;
+        b.left = a;
+    }
 
-        public static void printAsTree(BiNode root, String spaces) {
-                if (root == null) {
-                        System.out.println(spaces + "- null");
-                        return;
-                }
-                System.out.println(spaces + "- " + root.data);
-                printAsTree(root.node1, spaces + "   ");
-                printAsTree(root.node2, spaces + "   ");
-        }
+    
+    /*
+     helper function -- given two circular doubly linked
+     lists, append them and return the new list.
+    */
+    public static Node append(Node a, Node b) {
+        // if either is null, return the other
+        if (a==null) return(b);
+        if (b==null) return(a);
         
-        public static BiNode createTree() {
-                BiNode[] nodes = new BiNode[7];
-                for (int i = 0; i < nodes.length; i++) {
-                        nodes[i] = new BiNode(i);
-                }
-                nodes[4].node1 = nodes[2];
-                nodes[4].node2 = nodes[5];
-                nodes[2].node1 = nodes[1];
-                nodes[2].node2 = nodes[3];
-                nodes[5].node2 = nodes[6];
-                nodes[1].node1 = nodes[0];
-                return nodes[4];
-        }
+        // find the last node in each using the .previous pointer
+        Node part1 = a.left;
+        Node part3 = b.left;
         
-        public static void printLinkedListTree(BiNode root) {
-                for (BiNode node = root; node != null; node = node.node2) {
-                        if (node.node2 != null && node.node2.node1 != node) {
-                                System.out.print("inconsistent node: " + node);
-                        }
-                        System.out.print(node.data + "->");
-                }
-                System.out.println();
-        }
+        // join the two together to make it connected and circular
+        join(part1, b);
+        join(part3, a);
         
-        public static BiNode convertToCircular(BiNode root) {
-                if (root == null) {
-                        return null;
-                }
-                
-                BiNode part1 = convertToCircular(root.node1);
-                BiNode part3 = convertToCircular(root.node2);
-                                
-                if (part1 == null && part3 == null) {
-                        root.node1 = root;
-                        root.node2 = root;
-                        return root;
-                }
-                BiNode tail3 = part3 == null ? null : part3.node1;
-                
-                /* join left to root */
-                if (part1 == null) {
-                        concat(part3.node1, root);
-                } else {
-                        concat(part1.node1, root);
-                }
-                
-                /* join right to root */
-                if (part3 == null) {
-                        concat(root, part1);
-                } else {
-                        concat(root, part3);
-                }
-                
-                /* join right to left */
-                if (part1 != null && part3 != null) {
-                        concat(tail3, part1);
-                }
-                
-                return part1 == null ? root : part1;
-        }
+        return(a);
+    }
+
+    
+    /*
+     --Recursion--
+     Given an ordered binary tree, recursively change it into
+     a circular doubly linked list which is returned.
+    */
+    public static Node treeToList(Node root) {
+        // base case: empty tree -> empty list
+        if (root==null) return(null);
         
-        public static BiNode convert(BiNode root) {
-                BiNode head = convertToCircular(root);
-                head.node1.node2 = null;
-                head.node1 = null;
-                return head;
-        }
+        // Recursively do the subtrees (leap of faith!)
+        Node part1 = treeToList(root.left);
+        Node part3 = treeToList(root.right);
         
-        public static void concat(BiNode x, BiNode y) {
-                x.node2 = y;
-                y.node1 = x;
-        }
+        // Make the single root node into a list length-1
+        // in preparation for the appending
+        root.left = root;
+        root.right = root;
         
-        public static void main(String[] args) {
-                BiNode root = createTree();
-                printAsTree(root, "");
-                BiNode r = convert(root);
-                printLinkedListTree(r);
-        }
+        // At this point we have three lists, and it's
+        // just a matter of appending them together
+        // in the right order (part1, root, part3)
+        part1 = append(part1, root);
+        part1 = append(part1, part3);
+        
+        return(part1);
+    }
 }
 
-class BiNode:
-        def __init__(self, data):
-                self.data = data
-                self.left = None
-                self.right = None
-
-def bst_to_circular_dll(root):
-        if not root:
-                return None
-        part1 = bst_to_circular_dll(root.left)
-        part3 = bst_to_circular_dll(root.right)
-
-        if not part1 and not part3:
-                root.left = root
-                root.right = root
-                return root
-
-        tail3 = null if not part3 else part3.left
-
-        # join left to root
-        if not part1:
-                concat(part3.left, root)
-        else:
-                concat(part1.left, root)
-
-        # join right to root
-        if not part3:
-                concat(root, part1)
-        else:
-                concat(root, part3)
-
-        # join right to left
-        if part1 and part3:
-                concat(tail3, part1)
-
-        return root if not part1 else part1
-
-#main function: convert bst to dll
-def bst_to_dll(root):
-        head = bst_to_circular_dll(root)
-        head.left.right = None
-        head.left = None
-        return head
-
-def concat(x, y):
-        x.right = y
-        y.left = x
 
 // 3 Sum [The solution set must not contain duplicate triplets.]
 
