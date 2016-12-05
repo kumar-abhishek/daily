@@ -1,5 +1,3 @@
-Many good pieces of code are here: https://www.ics.uci.edu/~eppstein/161/python/
-
 String matching: naive
  
 public int strStr(String haystack, String needle) {
@@ -52,18 +50,9 @@ void insertionSort(int[] ar)
 } }
 
 
-// Merge sort
+Merge sort
 public class MergeSort {
-    public static void main(String[] args) {
-        int unsortedArray[] = new int[]{6, 5, 3, 1, 8, 7, 2, 4};
-        mergeSort(unsortedArray);
-        System.out.println("After sort: ");
-        for (int item : unsortedArray) {
-            System.out.print(item + " ");
-        }
-    }
-
-    private static void merge(int[] array, int low, int mid, int high) {
+   private static void merge(int[] array, int low, int mid, int high) {
         int[] helper = new int[array.length];
         // copy array to helper
         for (int k = low; k <= high; k++) {
@@ -110,18 +99,9 @@ public class MergeSort {
     }
 }
 
-// Quick sort
+Quick sort
 
 public class Sort {
-    public static void main(String[] args) {
-        int unsortedArray[] = new int[]{6, 5, 3, 1, 8, 7, 2, 4};
-        quickSort(unsortedArray);
-        System.out.println("After sort: ");
-        for (int item : unsortedArray) {
-            System.out.print(item + " ");
-        }
-    }
-
     public static void quickSort2(int[] array, int l, int u) {
         for (int item : array) {
             System.out.print(item + " ");
@@ -159,7 +139,7 @@ public class Sort {
     }
 }
 
-// Heap sort
+Heap sort
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -221,8 +201,39 @@ class HeapSort {
         }
 }
 
+Heap Sort:
 
-// counting and radix sort
+def Parent(i): return i/2
+def Left(i): return 2*i
+def Right(i): return 2*i+1
+
+def Heapify(A, i, n): # A is "almost a heap" (except root); fix it so all of A is a heap
+    l = Left(i)
+    r = Right(i)
+    if l <= n and A[l] > A[i]: largest = l
+    else: largest = i
+    if r <= n and A[r] > A[largest]:
+        largest = r
+    if largest != i:
+        A[i], A[largest] = A[largest], A[i]
+        Heapify(A, largest, n)
+
+def HeapLength(A): return len(A)-1
+
+def BuildHeap(A): # build a heap A from an unsorted array
+    n = HeapLength(A)
+    for i in range(n/2,-1,-1):
+        Heapify(A,i,n)
+
+def HeapSort(A): # use a heap to build sorted array from the end
+    BuildHeap(A)
+    HeapSize=HeapLength(A)
+    for i in range(HeapSize,-1,-1):
+        A[0],A[i]=A[i],A[0] # largest element is a root of heap, put it at the end of array
+        HeapSize=HeapSize-1 # shrink heap size by 1 to get next largest element
+        Heapify(A,0,HeapSize)
+
+counting and radix sort
 #!/usr/bin/env python
 
 def counting_sort(array, maxval):
@@ -241,170 +252,209 @@ def counting_sort(array, maxval):
 
 print counting_sort( [1, 4, 7, 2, 1, 3, 2, 1, 4, 2, 3, 2, 1], 7 )
 
-def radix_sort(array,k):
-    """k is the max no. of digits in the number in array"""
-    num=10
-    max_num=10**k
-    while num!=max_num:
-        def key_arr(x):
-            return x%num
-        array.sort(key=key_arr)
-        num=num*10
-    return array
+bucketSort(arr[], n)
+1) Create n empty buckets (Or lists).
+2) Do following for every array element arr[i].
+.......a) Insert arr[i] into bucket[n*array[i]]
+3) Sort individual buckets using insertion sort.
+4) Concatenate all sorted buckets.
 
-#############################################
-array=list(map(int,input().split()))
-print(array)
-#for a maximum of 4 digit number 
-array=radix_sort(array,4)
-print(array)
-#############################################
+Following diagram (taken from CLRS book) demonstrates working of bucket sort.
 
-// 35. BST to sorted DLL
 
+
+// Function to sort arr[] of size n using bucket sortvoid bucketSort(float arr[], int n){
+    // 1) Create n empty buckets
+    vector<float> b[n];
+    
+    // 2) Put array elements in different buckets
+    for (int i=0; i<n; i++)
+    {
+       int bi = n*arr[i]; // Index in bucket
+       b[bi].push_back(arr[i]);
+    }
  
-public class QuestionC {
+    // 3) Sort individual buckets
+    for (int i=0; i<n; i++)
+       sort(b[i].begin(), b[i].end());
+ 
+    // 4) Concatenate all buckets into arr[]
+    int index = 0;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < b[i].size(); j++)
+          arr[index++] = b[i][j];}
 
-        public static void printAsTree(BiNode root, String spaces) {
-                if (root == null) {
-                        System.out.println(spaces + "- null");
-                        return;
-                }
-                System.out.println(spaces + "- " + root.data);
-                printAsTree(root.node1, spaces + "   ");
-                printAsTree(root.node2, spaces + "   ");
+ Radix Sort
+
+class Radix {
+ 
+    // A utility function to get maximum value in arr[]
+    static int getMax(int arr[], int n)
+    {
+        int mx = arr[0];
+        for (int i = 1; i < n; i++)
+            if (arr[i] > mx)
+                mx = arr[i];
+        return mx;
+    }
+ 
+    // A function to do counting sort of arr[] according to
+    // the digit represented by exp.
+    static void countSort(int arr[], int n, int exp)
+    {
+        int output[] = new int[n]; // output array
+        int i;
+        int count[] = new int[10];
+        Arrays.fill(count,0);
+ 
+        // Store count of occurrences in count[]
+        for (i = 0; i < n; i++)
+            count[ (arr[i]/exp)%10 ]++;
+ 
+        // Change count[i] so that count[i] now contains
+        // actual position of this digit in output[]
+        for (i = 1; i < 10; i++)
+            count[i] += count[i - 1];
+ 
+        // Build the output array
+        for (i = n - 1; i >= 0; i--)
+        {
+            output[count[ (arr[i]/exp)%10 ] - 1] = arr[i];
+            count[ (arr[i]/exp)%10 ]--;
         }
+ 
+        // Copy the output array to arr[], so that arr[] now
+        // contains sorted numbers according to curent digit
+        for (i = 0; i < n; i++)
+            arr[i] = output[i];
+    }
+ 
+    // The main function to that sorts arr[] of size n using
+    // Radix Sort
+    static void radixsort(int arr[], int n)
+    {
+        // Find the maximum number to know number of digits
+        int m = getMax(arr, n);
+ 
+        // Do counting sort for every digit. Note that instead
+        // of passing digit number, exp is passed. exp is 10^i
+        // where i is current digit number
+        for (int exp = 1; m/exp > 0; exp *= 10)
+            countSort(arr, n, exp);
+    }
+ 
+    // A utility function to print an array
+    static void print(int arr[], int n)
+    {
+        for (int i=0; i<n; i++)
+            System.out.print(arr[i]+" ");
+    }
+ 
+ 
+    /*Driver function to check for above function*/
+    public static void main (String[] args)
+    {
+        int arr[] = {170, 45, 75, 90, 802, 24, 2, 66};
+        int n = arr.length;
+        radixsort(arr, n);
+        print(arr, n);
+    }}
+
+
+Linked list reversal recursive
+Ans:
+
+def reverseList(self, head):
+     if head is None:
+          return None
+     if head.next is None:
+          return head
+     l = self.reverseList(head.next)
+     head.next.next = head
+     head.next = None
+     return l
+
+Iterative:
+      def reverse(self, head):
+          # write your code here
+          if not head:
+            return head
+          prev = None
+          curr = head
+          while curr:
+              temp = curr.next
+              curr.next = prev
+              prev = curr
+              curr = temp
+return prev
+
+
+Prime number generation/Sieve of Eratosthenes:
+The Sieve of Eratosthenes uses an extra O(n) memory and its runtime complexity is O(n log log n). For the more mathematically inclined readers, you can read more about its algorithm complexity on Wikipedia.
+
+/* Generate a prime list from 0 up to n, using The Sieve of Erantosthenesparam n The upper bound of the prime list (including n)param prime[] An array of truth value whether a number is prime*/void prime_sieve(int n, bool prime[]) {
+  prime[0] = false;
+  prime[1] = false;
+  int i;
+  for (i = 2; i <= n; i++)
+    prime[i] = true;
+
+  int limit = sqrt(n);
+  for (i = 2; i <= limit; i++) {
+    if (prime[i]) {
+      for (int j = i * i; j <= n; j += i)
+        prime[j] = false;
+    }
+  }}
+
+BST to sorted DLL  
+class TreeList {
+    /*     helper function -- given two list nodes, join them          together so the second immediately follow the first.         Sets the .next of the first and the .previous of the second.    */
+    public static void join(Node a, Node b) {
+        a.right = b;
+        b.left = a;
+    }
+    
+    /*     helper function -- given two circular doubly linked     lists, append them and return the new list.    */
+    public static Node append(Node a, Node b) {
+        // if either is null, return the other
+        if (a==null) return(b);
+        if (b==null) return(a);
         
-        public static BiNode createTree() {
-                BiNode[] nodes = new BiNode[7];
-                for (int i = 0; i < nodes.length; i++) {
-                        nodes[i] = new BiNode(i);
-                }
-                nodes[4].node1 = nodes[2];
-                nodes[4].node2 = nodes[5];
-                nodes[2].node1 = nodes[1];
-                nodes[2].node2 = nodes[3];
-                nodes[5].node2 = nodes[6];
-                nodes[1].node1 = nodes[0];
-                return nodes[4];
-        }
+        // find the last node in each using the .previous pointer
+        Node part1 = a.left;
+        Node part3 = b.left;
         
-        public static void printLinkedListTree(BiNode root) {
-                for (BiNode node = root; node != null; node = node.node2) {
-                        if (node.node2 != null && node.node2.node1 != node) {
-                                System.out.print("inconsistent node: " + node);
-                        }
-                        System.out.print(node.data + "->");
-                }
-                System.out.println();
-        }
+        // join the two together to make it connected and circular
+        join(part1, b);
+        join(part3, a);
         
-        public static BiNode convertToCircular(BiNode root) {
-                if (root == null) {
-                        return null;
-                }
-                
-                BiNode part1 = convertToCircular(root.node1);
-                BiNode part3 = convertToCircular(root.node2);
-                                
-                if (part1 == null && part3 == null) {
-                        root.node1 = root;
-                        root.node2 = root;
-                        return root;
-                }
-                BiNode tail3 = part3 == null ? null : part3.node1;
-                
-                /* join left to root */
-                if (part1 == null) {
-                        concat(part3.node1, root);
-                } else {
-                        concat(part1.node1, root);
-                }
-                
-                /* join right to root */
-                if (part3 == null) {
-                        concat(root, part1);
-                } else {
-                        concat(root, part3);
-                }
-                
-                /* join right to left */
-                if (part1 != null && part3 != null) {
-                        concat(tail3, part1);
-                }
-                
-                return part1 == null ? root : part1;
-        }
+        return(a);
+    }
+
+    
+    /*     --Recursion--     Given an ordered binary tree, recursively change it into     a circular doubly linked list which is returned.    */
+    public static Node treeToList(Node root) {
+        // base case: empty tree -> empty list
+        if (root==null) return(null);
         
-        public static BiNode convert(BiNode root) {
-                BiNode head = convertToCircular(root);
-                head.node1.node2 = null;
-                head.node1 = null;
-                return head;
-        }
+        // Recursively do the subtrees (leap of faith!)
+        Node part1 = treeToList(root.left);
+        Node part3 = treeToList(root.right);
         
-        public static void concat(BiNode x, BiNode y) {
-                x.node2 = y;
-                y.node1 = x;
-        }
+        // Make the single root node into a list length-1
+        // in preparation for the appending
+        root.left = root;
+        root.right = root;
         
-        public static void main(String[] args) {
-                BiNode root = createTree();
-                printAsTree(root, "");
-                BiNode r = convert(root);
-                printLinkedListTree(r);
-        }
-}
-
-class BiNode:
-        def __init__(self, data):
-                self.data = data
-                self.left = None
-                self.right = None
-
-def bst_to_circular_dll(root):
-        if not root:
-                return None
-        part1 = bst_to_circular_dll(root.left)
-        part3 = bst_to_circular_dll(root.right)
-
-        if not part1 and not part3:
-                root.left = root
-                root.right = root
-                return root
-
-        tail3 = null if not part3 else part3.left
-
-        # join left to root
-        if not part1:
-                concat(part3.left, root)
-        else:
-                concat(part1.left, root)
-
-        # join right to root
-        if not part3:
-                concat(root, part1)
-        else:
-                concat(root, part3)
-
-        # join right to left
-        if part1 and part3:
-                concat(tail3, part1)
-
-        return root if not part1 else part1
-
-#main function: convert bst to dll
-def bst_to_dll(root):
-        head = bst_to_circular_dll(root)
-        head.left.right = None
-        head.left = None
-        return head
-
-def concat(x, y):
-        x.right = y
-        y.left = x
-
-// 3 Sum [The solution set must not contain duplicate triplets.]
+        // At this point we have three lists, and it's
+        // just a matter of appending them together
+        // in the right order (part1, root, part3)
+        part1 = append(part1, root);
+        part1 = append(part1, part3);
+        
+        return(part1);
+    }}
 
 class Solution:
     # @param {integer[]} nums
@@ -425,7 +475,7 @@ class Solution:
                     j += 1
         return ans
 
-// 3 Sum Closest variant:
+3 Sum Closest variant:
 
 class Solution:
     # @param {integer[]} nums
@@ -448,7 +498,7 @@ class Solution:
                     j += 1
         return ans
 
-// 4 Sum: variant
+4 Sum: variant
 
 class Solution:
     # @param {integer[]} nums
@@ -477,7 +527,8 @@ class Solution:
                         b -= 1
         return solution
 
-1. kth smallest in a bst
+
+kth smallest in a bst
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -501,7 +552,9 @@ class Solution:
             k -= 1
             root = root.right
 
-Huffman encoding Algorithm: The Huffman encoding algorithm has two main steps:
+
+
+Q. Huffman encoding Algorithm: The Huffman encoding algorithm has two main steps:
 
 Create a binary tree containing all of the items in the source by successively combining the least occurring two elements in the list until there is only one node which all others spring from. For each item in the sequence, walk down the tree from the root to the node labelled with the item — add a 0 for each time you take the left branch and a 1 for each time you take the right branch.
 
@@ -705,9 +758,7 @@ def preorder_traverse_iter(root):
     return result 
 
 
-
-
-1. infix to postfix and evaluate postfix
+Infix to postfix and evaluate postfix
 """
 Definition of ExpressionTreeNode:
 class ExpressionTreeNode:
@@ -777,23 +828,42 @@ Median of a data stream
 class MedianFinder {
 
     private Queue<Long> small = new PriorityQueue(),
-                        large = new PriorityQueue();
+                        large = new PriorityQueue(); // try for Collections.reverseOrder()
 
     public void addNum(int num) {
         large.add((long) num);
-        small.add(-large.poll());
+        small.add(large.poll());
         if (large.size() < small.size())
-            large.add(-small.poll());
+            large.add(small.poll());
     }
 
     public double findMedian() {
         return large.size() > small.size()
               ? large.peek()
-              : (large.peek() - small.peek()) / 2.0;
+              : (large.peek() + small.peek()) / 2.0;
     }
 };
 
+nQueen
+def totalNQueens(self, n):
+    self.res = 0
+    self.dfs([-1]*n, 0)
+    return self.res
 
+def dfs(self, board, index):
+    if index == len(board):
+        self.res += 1
+        return 
+    for i in xrange(len(board)):
+        if self.check(board, index, i):
+            board[index] = i
+            self.dfs(board, index+1)
+
+# check whether kth queen can be placed# in column jdef check(self, board, k, j):
+    for i in xrange(k):
+        if board[i] == j or k-i == abs(j-board[i]):
+            return False
+    return True
 
  regex pattern matching
 
@@ -904,7 +974,6 @@ if the wild card plays once, then dp[i+1][j+1] = dp[i][j-1] && (s[i]==p[j-1] || 
 if the wild card plays many times, the dp[i+1][j+1] = dp[i][j+1] && (s[i]==p[j-1] || p[j-1] == ‘.’)
 
 3. the other scenarios, the default value “false” will be populated for the rest.
-
 
 # For . and * problem
 # dp
@@ -1085,12 +1154,10 @@ class Solution(object):
         map = {}
         return self.clone_rec(node, map)
 
+Subsets of a list [power set]/permutation
 
 
-// Subsets of a list [power set]/permutation
-
-
-// Permutations : https://leetcode.com/problems/permutations/
+Permutations : https://leetcode.com/problems/permutations/
 public List<List<Integer>> permute(int[] nums) {
   List<List<Integer>> list = new ArrayList<>();
   // Arrays.sort(nums); // not necessary
@@ -1112,7 +1179,7 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 }
 
 
-// Permutations II (contains duplicates) : https://leetcode.com/problems/permutations-ii/
+Permutations II (contains duplicates) : https://leetcode.com/problems/permutations-ii/
 public List<List<Integer>> permuteUnique(int[] nums) {
     List<List<Integer>> list = new ArrayList<>();
     Arrays.sort(nums);
@@ -1166,7 +1233,7 @@ public boolean isPalindrome(String s, int low, int high){
 
 
 	
-// 30. Combination: Picking 'k' items from a list of 'n' - Recursion 
+30. Combination: Picking 'k' items from a list of 'n' - Recursion 
 
 public class Solution { 
     public List<List<Integer>> combine(int n, int k) { 
@@ -1185,9 +1252,9 @@ public class Solution {
     } 
 } 
 
-//Power set 
-//-=== 
-//Subsets : https://leetcode.com/problems/subsets/
+Power set 
+-=== 
+Subsets : https://leetcode.com/problems/subsets/
 
 public List<List<Integer>> subsets(int[] nums) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1206,7 +1273,7 @@ private void backtrack(List<List<Integer>> list , List<Integer> tempList, int []
 }
 
 
-// Subsets II (contains duplicates) : https://leetcode.com/problems/subsets-ii/
+Subsets II (contains duplicates) : https://leetcode.com/problems/subsets-ii/
 
 public List<List<Integer>> subsetsWithDup(int[] nums) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1225,9 +1292,9 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
     }
 } 
 
-//Combination Sum: Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T. The same repeated number may be chosen from C unlimited number of times.
+Combination Sum: Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T. The same repeated number may be chosen from C unlimited number of times.
 
-// Combination Sum : https://leetcode.com/problems/combination-sum/
+Combination Sum : https://leetcode.com/problems/combination-sum/
 
 public List<List<Integer>> combinationSum(int[] nums, int target) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1249,7 +1316,7 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 }
 
 
-// Combination Sum II (can't reuse same element) : https://leetcode.com/problems/combination-sum-ii/
+Combination Sum II (can't reuse same element) : https://leetcode.com/problems/combination-sum-ii/
 
 public List<List<Integer>> combinationSum2(int[] nums, int target) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1275,7 +1342,7 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 
 
 
-// Inorder successor in a BST:
+Inorder successor in a BST:
 class Solution(object):
     def inorderSuccessor(self, root, p):
         """
@@ -1302,7 +1369,7 @@ class Solution(object):
         return successor
 
 
-// LRU Cache
+LRU Cache
 
 class LRUCache:
      def __init(self, capacity):
@@ -1336,7 +1403,7 @@ class LRUCache:
             node = self.cache_vals.remove_head()
             del self.cache[node.key]
            
-// Hash table implementation 
+Hash table implementation 
 
 import java.util.ArrayList;
 
@@ -1434,6 +1501,38 @@ public class Hasher<K, V> {
                         System.out.println(i + ": " + s);
                 }
         }
+
+
+K way merge
+public class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists == null || lists.length == 0) {
+            return null;
+        }
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length, new Comparator<ListNode>(){
+                @Override
+                public int compare(ListNode l1, ListNode l2) { return l1.val-l2.val; }
+            });
+
+        ListNode mergedList = new ListNode(0);
+        ListNode head = mergedList;
+        for(int i=0;i<lists.length;i++){
+            if(lists[i] != null){
+                pq.offer(lists[i]); // we should be able to initialize from a list: PriorityQueue(Collection<? extends E> c)
+            }
+        }
+        while(!pq.isEmpty()){
+            ListNode l = pq.poll();
+            if(l.next != null){
+                pq.offer(l.next);
+            }
+            mergedList.next = l;
+            mergedList = mergedList.next;
+        }
+        return head.next;
+    }
+}
+
 
 
 Permutations : https://leetcode.com/problems/permutations/
