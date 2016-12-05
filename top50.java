@@ -1252,7 +1252,7 @@ public boolean isPalindrome(String s, int low, int high){
 
 
 	
-30. Combination: Picking 'k' items from a list of 'n' - Recursion 
+//30. Combination: Picking 'k' items from a list of 'n' - Recursion 
 
 public class Solution { 
     public List<List<Integer>> combine(int n, int k) { 
@@ -1335,7 +1335,7 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 }
 
 
-Combination Sum II (can't reuse same element) : https://leetcode.com/problems/combination-sum-ii/
+//Combination Sum II (can't reuse same element) : https://leetcode.com/problems/combination-sum-ii/
 
 public List<List<Integer>> combinationSum2(int[] nums, int target) {
     List<List<Integer>> list = new ArrayList<>();
@@ -1361,7 +1361,7 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 
 
 
-Inorder successor in a BST:
+//Inorder successor in a BST:
 class Solution(object):
     def inorderSuccessor(self, root, p):
         """
@@ -1388,7 +1388,7 @@ class Solution(object):
         return successor
 
 
-LRU Cache
+//LRU Cache
 
 class LRUCache:
      def __init(self, capacity):
@@ -1422,7 +1422,7 @@ class LRUCache:
             node = self.cache_vals.remove_head()
             del self.cache[node.key]
            
-Hash table implementation 
+//Hash table implementation 
 
 import java.util.ArrayList;
 
