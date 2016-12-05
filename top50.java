@@ -263,6 +263,7 @@ Following diagram (taken from CLRS book) demonstrates working of bucket sort.
 
 
 
+<<<<<<< HEAD
 // Function to sort arr[] of size n using bucket sortvoid bucketSort(float arr[], int n){
     // 1) Create n empty buckets
     vector<float> b[n];
@@ -415,7 +416,22 @@ class TreeList {
         b.left = a;
     }
     
-    /*     helper function -- given two circular doubly linked     lists, append them and return the new list.    */
+class TreeList {
+    /*
+     helper function -- given two list nodes, join them
+     together so the second immediately follow the first.
+     Sets the .next of the first and the .previous of the second.
+    */
+    public static void join(Node a, Node b) {
+        a.right = b;
+        b.left = a;
+    }
+
+    
+    /*
+     helper function -- given two circular doubly linked
+     lists, append them and return the new list.
+    */
     public static Node append(Node a, Node b) {
         // if either is null, return the other
         if (a==null) return(b);
@@ -432,8 +448,6 @@ class TreeList {
         return(a);
     }
 
-    
-    /*     --Recursion--     Given an ordered binary tree, recursively change it into     a circular doubly linked list which is returned.    */
     public static Node treeToList(Node root) {
         // base case: empty tree -> empty list
         if (root==null) return(null);
@@ -454,7 +468,12 @@ class TreeList {
         part1 = append(part1, part3);
         
         return(part1);
-    }}
+    }
+}
+
+
+// 3 Sum [The solution set must not contain duplicate triplets.]
+>>>>>>> 333de611c480eab554cd1f121959c2b52711c3b6
 
 class Solution:
     # @param {integer[]} nums
