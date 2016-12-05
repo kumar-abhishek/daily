@@ -252,40 +252,59 @@ def counting_sort(array, maxval):
 
 print counting_sort( [1, 4, 7, 2, 1, 3, 2, 1, 4, 2, 3, 2, 1], 7 )
 
-bucketSort(arr[], n)
-1) Create n empty buckets (Or lists).
-2) Do following for every array element arr[i].
-.......a) Insert arr[i] into bucket[n*array[i]]
-3) Sort individual buckets using insertion sort.
-4) Concatenate all sorted buckets.
 
-Following diagram (taken from CLRS book) demonstrates working of bucket sort.
+// bucketSort(arr[], n)
+public class BucketSort {
+    private static final int DEFAULT_BUCKET_SIZE = 5;
 
-
-
-<<<<<<< HEAD
-// Function to sort arr[] of size n using bucket sortvoid bucketSort(float arr[], int n){
-    // 1) Create n empty buckets
-    vector<float> b[n];
-    
-    // 2) Put array elements in different buckets
-    for (int i=0; i<n; i++)
-    {
-       int bi = n*arr[i]; // Index in bucket
-       b[bi].push_back(arr[i]);
+    public static void sort(Integer[] array) {
+        sort(array, DEFAULT_BUCKET_SIZE);
     }
- 
-    // 3) Sort individual buckets
-    for (int i=0; i<n; i++)
-       sort(b[i].begin(), b[i].end());
- 
-    // 4) Concatenate all buckets into arr[]
-    int index = 0;
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < b[i].size(); j++)
-          arr[index++] = b[i][j];}
 
- Radix Sort
+    public static void sort(Integer[] array, int bucketSize) {
+        if (array.length == 0) {
+            return;
+        }
+
+        // Determine minimum and maximum values
+        Integer minValue = array[0];
+        Integer maxValue = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < minValue) {
+                minValue = array[i];
+            } else if (array[i] > maxValue) {
+                maxValue = array[i];
+            }
+        }
+
+        // Initialise buckets
+        int bucketCount = (maxValue - minValue) / bucketSize + 1;
+        List<List<Integer>> buckets = new ArrayList<List<Integer>>(bucketCount);
+        for (int i = 0; i < bucketCount; i++) {
+            buckets.add(new ArrayList<Integer>());
+        }
+
+        // Distribute input array values into buckets
+        for (int i = 0; i < array.length; i++) {
+            buckets.get((array[i] - minValue) / bucketSize).add(array[i]);
+        }
+
+        // Sort buckets and place back into input array
+        int currentIndex = 0;
+        for (int i = 0; i < buckets.size(); i++) {
+            Integer[] bucketArray = new Integer[buckets.get(i).size()];
+            bucketArray = buckets.get(i).toArray(bucketArray);
+            InsertionSort.sort(bucketArray);
+            for (int j = 0; j < bucketArray.length; j++) {
+                array[currentIndex++] = bucketArray[j];
+            }
+        }
+    }
+}
+
+
+
+// Radix Sort
 
 class Radix {
  
@@ -1522,7 +1541,7 @@ public class Hasher<K, V> {
         }
 
 
-K way merge
+//K way merge
 public class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         if(lists == null || lists.length == 0) {
