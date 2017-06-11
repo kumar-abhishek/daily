@@ -1,4 +1,6 @@
 // accepted: 10107	What is the Median?
+// Use max-heap/min-heap solution when you want median in O(1)
+// nth_element used here is O(n) time
 #include <iostream>
 #include <algorithm>
 #include <vector>
